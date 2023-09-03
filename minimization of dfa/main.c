@@ -1,96 +1,276 @@
 #include <stdio.h>
-#include <stdbool.h>
+#include <string.h>
 
-#define MAX_STATES 50
-#define MAX_ALPHABET 26
+#define STATES 50
 
-int numStates, numAlphabet;
-int transition[MAX_STATES][MAX_ALPHABET];
-bool isFinal[MAX_STATES];
+struct Dstate
+{
+    char name;
+    char StateString[STATES + 1];
+    char trans[10];
+    int is_final;
+} Dstates[50];
 
-// Function to minimize the DFA
-void minimizeDFA() {
-    int equivalenceClasses[MAX_STATES]; // Equivalence classes for states
-    int newEquivalenceClasses[MAX_STATES];
-    int numEquivalenceClasses = numStates;
-    bool changed = true;
+struct tran
+{
+    char sym;
+    int tostates[50];
+    int notran;
+};
 
-    // Initialize equivalence classes
-    for (int i = 0; i < numStates; i++) {
-        equivalenceClasses[i] = (isFinal[i]) ? 0 : 1;
+struct state
+{
+    int no;
+    struct tran tranlist[50];
+};
+
+int stackA[100], stackB[100], c[100], Cptr = -1, Aptr = -1, Bptr = -1;
+struct state States[10];
+char temp[STATES + 1], inp[10];
+int nos, noi, nof, j, k, nods = -1;
+
+void pushA(int z)
+{
+    stackA[++Aptr] = z;
+}
+
+void pushB(int z)
+{
+    stackB[++Bptr] = z;
+}
+
+int popA()
+{
+    return stackA[Aptr--];
+}
+
+void copy(int i)
+{
+    char temp[STATES + 1] = " ";
+    int k = 0;
+    Bptr = -1;
+    strcpy(temp, Dstates[i].StateString);
+    while (temp[k] != '\0')
+    {
+        pushB(temp[k] - '0');
+        k++;
     }
+}
 
-    while (changed) {
-        changed = false;
+int popB()
+{
+    return stackB[Bptr--];
+}
 
-        // Iterate over each pair of states
-        for (int i = 0; i < numStates; i++) {
-            for (int j = i + 1; j < numStates; j++) {
-                if (equivalenceClasses[i] != equivalenceClasses[j]) {
-                    bool equivalent = true;
+int peekA()
+{
+    return stackA[Aptr];
+}
 
-                    // Check for equivalence using all alphabet symbols
-                    for (int k = 0; k < numAlphabet; k++) {
-                        int nextState1 = transition[i][k];
-                        int nextState2 = transition[j][k];
+int peekB()
+{
+    return stackA[Bptr];
+}
 
-                        if (equivalenceClasses[nextState1] != equivalenceClasses[nextState2]) {
-                            equivalent = false;
-                            break;
-                        }
-                    }
-
-                    // If equivalent, merge the equivalence classes
-                    if (equivalent) {
-                        newEquivalenceClasses[i] = newEquivalenceClasses[j] = numEquivalenceClasses;
-                        numEquivalenceClasses++;
-                        changed = true;
-                    }
-                }
-            }
-        }
-
-        // Update equivalence classes
-        for (int i = 0; i < numStates; i++) {
-            if (newEquivalenceClasses[i] != 0) {
-                equivalenceClasses[i] = newEquivalenceClasses[i];
-            }
-        }
+int seek(int arr[], int ptr, int s)
+{
+    int i;
+    for (i = 0; i <= ptr; i++)
+    {
+        if (s == arr[i])
+            return 1;
     }
+    return 0;
+}
 
-    // Print minimized DFA
-    printf("Minimized DFA:\n");
-    for (int i = 0; i < numStates; i++) {
-        if (equivalenceClasses[i] == 0) {
-            printf("State %d (Final State)\n", i);
-        } else {
-            printf("State %d\n", i);
+void sort()
+{
+    int i, j, temp;
+    for (i = 0; i < Bptr; i++)
+    {
+        for (j = 0; j < (Bptr - i); j++)
+        {
+            if (stackB[j] > stackB[j + 1])
+            {
+                temp = stackB[j];
+                stackB[j] = stackB[j + 1];
+                stackB[j + 1] = temp;
+            }
         }
     }
 }
 
-int main() {
-    printf("Enter the number of states: ");
-    scanf("%d", &numStates);
-    printf("Enter the number of alphabet symbols: ");
-    scanf("%d", &numAlphabet);
+void tostring()
+{
+    int i = 0;
+    sort();
+    for (i = 0; i <= Bptr; i++)
+    {
+        temp[i] = stackB[i] + '0';
+    }
+    temp[i] = '\0';
+}
 
-    printf("Enter transition table:\n");
-    for (int i = 0; i < numStates; i++) {
-        for (int j = 0; j < numAlphabet; j++) {
-            printf("Delta(q%d, %c) = ", i, 'a' + j);
-            scanf("%d", &transition[i][j]);
+void display_DTran()
+{
+    int i, j;
+    printf("\n\t\t DFA transition table");
+    printf("\n\t\t ---------------------------------------------- ");
+    printf("\n States \tString \tInputs\n");
+    for (i = 0; i < noi; i++)
+    {
+        printf("\t %c", inp[i]);
+    }
+    printf("\n\t ------------------------------------------------- ");
+    for (i = 0; i < nods; i++)
+    {
+        if (Dstates[i].is_final == 0)
+            printf("\n%c", Dstates[i].name);
+        else
+            printf("\n*%c", Dstates[i].name);
+        printf("\t%s", Dstates[i].StateString);
+        for (j = 0; j < noi; j++)
+        {
+            printf("\t%c", Dstates[i].trans[j]);
+        }
+    }
+    printf("\n");
+}
+
+void move(int st, int j)
+{
+    int ctr = 0;
+    while (ctr < States[st].tranlist[j].notran)
+    {
+        pushA(States[st].tranlist[j].tostates[ctr++]);
+    }
+}
+
+void lambda_closure(int st)
+{
+    int ctr = 0, in_state = st, curst = st, chk;
+    while (Aptr != -1)
+    {
+        curst = popA();
+        ctr = 0;
+        in_state = curst;
+        while (ctr <= States[curst].tranlist[noi].notran)
+        {
+            chk = seek(stackB, Bptr, in_state);
+            if (chk == 0)
+                pushB(in_state);
+            in_state = States[curst].tranlist[noi].tostates[ctr++];
+            chk = seek(stackA, Aptr, in_state);
+            if (chk == 0 && ctr <= States[curst].tranlist[noi].notran)
+                pushA(in_state);
+        }
+    }
+}
+
+int main()
+{
+    int i, final[20], start, fin = 0;
+    char c, ans, st[20];
+    printf("\n Enter no of states in NFA:");
+    scanf("%d", &nos);
+    for (i = 0; i < nos; i++)
+    {
+        States[i].no = i;
+    }
+    printf("\n Enter the start states:");
+    scanf("%d", &start);
+    printf("Enter the no of final states:");
+    scanf("%d", &nof);
+    printf("Enter the final states:\n");
+    for (i = 0; i < nof; i++)
+        scanf("%d", &final[i]);
+    printf("\n Enter the no of input symbols:");
+    scanf("%d", &noi);
+    c = getchar();
+    printf("Enter the input symbols:\n");
+    for (i = 0; i < noi; i++)
+    {
+        scanf("%c", &inp[i]);
+        c = getchar();
+    }
+
+    // Initialize transition symbols for epsilon transitions
+    inp[noi] = 'e';
+
+    printf("\n Enter the transitions (-1 to stop):\n");
+    for (i = 0; i < nos; i++)
+    {
+        for (j = 0; j <= noi; j++)
+        {
+            States[i].tranlist[j].sym = inp[j];
+            k = 0;
+            ans = 'y';
+            while (ans == 'y')
+            {
+                printf("move(%d,%c);", i, inp[j]);
+                scanf("%d", &States[i].tranlist[j].tostates[k++]);
+                if (States[i].tranlist[j].tostates[k - 1] == -1)
+                {
+                    k--;
+                    ans = 'n';
+                    break;
+                }
+            }
+            States[i].tranlist[j].notran = k;
         }
     }
 
-    printf("Enter the final states (0-based indices, separated by spaces): ");
-    for (int i = 0; i < numStates; i++) {
-        int finalState;
-        scanf("%d", &finalState);
-        isFinal[finalState] = true;
-    }
+    i = 0;
+    nods = 0;
+    fin = 0;
+    pushA(start);
+    lambda_closure(peekA());
+    tostring();
+    Dstates[nods].name = 'A';
+    nods++;
+    strcpy(Dstates[0].StateString, temp);
 
-    minimizeDFA();
+    while (i < nods)
+    {
+        for (j = 0; j < noi; j++)
+        {
+            fin = 0;
+            copy(i);
+            while (Bptr != -1)
+            {
+                move(popB(), j);
+            }
+            while (Aptr != -1)
+                lambda_closure(peekA());
+            tostring();
+            for (k = 0; k < nods; k++)
+            {
+                if (strcmp(temp, Dstates[k].StateString) == 0)
+                {
+                    Dstates[i].trans[j] = Dstates[k].name;
+                    break;
+                }
+            }
+            if (k == nods)
+            {
+                nods++;
+                for (k = 0; k < nof; k++)
+                {
+                    fin = seek(stackB, Bptr, final[k]);
+                    if (fin == 1)
+                    {
+                        Dstates[nods - 1].is_final = 1;
+                        break;
+                    }
+                }
+                strcpy(Dstates[nods - 1].StateString, temp);
+                Dstates[nods - 1].name = 'A' + nods - 1;
+                Dstates[i].trans[j] = Dstates[nods - 1].name;
+            }
+        }
+        i++;
+    }
+    display_DTran();
 
     return 0;
 }
