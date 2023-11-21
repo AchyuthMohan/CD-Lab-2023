@@ -6,71 +6,25 @@ struct node
     struct node *link;
 };
 
-void findclosure(int, int);
-void insert_trantbl(int, char, int);
-int findalpha(char);
-void print_e_closure(int);
-
-static int set[20], nostate, noalpha, s, notransition, c, r, buffer[20];
-char alphabet[20];
+static int states, alpha, trans, r, s, count;
+char alphabets[20], c;
+int buffer[20];
+struct node *transitions[20][20] = {NULL};
 static int e_closure[20][20] = {0};
-struct node *transition[20][20] = {NULL};
-
-void main()
-{
-    int i, j, k, m, t, n;
-    struct node *temp;
-    printf("Enter the number of alphabets?\n");
-    scanf("%d", &noalpha);
-    getchar();
-    printf("NOTE:- [ use letter e as epsilon]\n");
-    printf("NOTE:- [e must be last character ,if it is present]\n");
-    printf("\nEnter alphabets?\n");
-    for (i = 0; i < noalpha; i++)
-    {
-        alphabet[i] = getchar();
-        getchar();
-    }
-    printf("\nEnter the number of states?\n");
-    scanf("%d", &nostate);
-    printf("\nEnter no of transition?\n");
-    scanf("%d", &notransition);
-    printf("NOTE:- [Transition is in the form–> qno alphabet qno]\n", notransition);
-    printf("NOTE:- [States number must be greater than zero]\n");
-    printf("\nEnter transition?\n");
-    for (i = 0; i < notransition; i++)
-    {
-        scanf("%d %c%d", &r, &c, &s);
-        insert_trantbl(r, c, s);
-    }
-    printf("\n");
-    printf("e-closure of states……\n");
-    printf("—————————–\n");
-    for (i = 1; i <= nostate; i++)
-    {
-        c = 0;
-        for (j = 0; j < 20; j++)
-        {
-            buffer[j] = 0;
-            e_closure[i][j] = 0;
-        }
-        findclosure(i, i);
-        printf("\ne-closure(q%d): ", i);
-        print_e_closure(i);
-    }
-}
 
 void findclosure(int x, int sta)
 {
     struct node *temp;
     int i;
     if (buffer[x])
-        return;
-    e_closure[sta][c++] = x;
-    buffer[x] = 1;
-    if (alphabet[noalpha - 1] == 'e' && transition[x][noalpha - 1] != NULL)
     {
-        temp = transition[x][noalpha - 1];
+        return;
+    }
+    e_closure[sta][count++] = x;
+    buffer[x] = 1;
+    if (alphabets[alpha - 1] == 'e' && transitions[x][alpha - 1] != NULL)
+    {
+        temp = transitions[x][alpha - 1];
         while (temp != NULL)
         {
             findclosure(temp->st, sta);
@@ -78,36 +32,68 @@ void findclosure(int x, int sta)
         }
     }
 }
-
-void insert_trantbl(int r, char c, int s)
+int findalpha(char ch)
 {
-    int j;
+    for (int i = 0; i < alpha; i++)
+    {
+        if (alphabets[i] == ch)
+        {
+            return i;
+        }
+    }
+    return 999;
+}
+void insertIntoTable(int r, char c, int s)
+{
+    int j = findalpha(c);
     struct node *temp;
-    j = findalpha(c);
+
     if (j == 999)
     {
-        printf("error\n");
+        printf("Error");
         exit(0);
     }
     temp = (struct node *)malloc(sizeof(struct node));
     temp->st = s;
-    temp->link = transition[r][j];
-    transition[r][j] = temp;
+    temp->link = transitions[r][j];
+    transitions[r][j] = temp;
 }
-
-int findalpha(char c)
-{
-    int i;
-    for (i = 0; i < noalpha; i++)
-        if (alphabet[i] == c)
-            return i;
-    return (999);
-}
-void print_e_closure(int i)
+void printclosure(int i)
 {
     int j;
     printf("{");
     for (j = 0; e_closure[i][j] != 0; j++)
         printf("q%d,", e_closure[i][j]);
     printf("}");
+}
+int main()
+{
+    printf("Enter the number of states: ");
+    scanf("%d", &states);
+    printf("Enter the number of alphabets: ");
+    scanf("%d", &alpha);
+    printf("Enter the alphabets: \n");
+    for (int i = 0; i < alpha; i++)
+    {
+        scanf("%c", &alphabets[i]);
+    }
+    printf("Enter the number of transitions: \n");
+    scanf("%d", &trans);
+    printf("Enter the transitions:\n");
+    for (int i = 0; i < trans; i++)
+    {
+        scanf("%d%c%d", &r, &c, &s);
+        insertIntoTable(r, c, s);
+    }
+    for (int i = 1; i <= states; i++)
+    {
+        count = 0;
+        for (int j = 0; j < 20; j++)
+        {
+            buffer[j] = 0;
+            e_closure[i][j] = 0;
+        }
+        findclosure(i, i);
+        printclosure(i);
+    }
 }
