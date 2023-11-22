@@ -28,11 +28,9 @@ int main(){
     printf("n Enter the no of states: ");
     scanf("%d",&n);
     printf("n Enter the states n");
-    for(k=0;k<3;k++){
+    for(k=0;k<n;k++){
 		scanf("%s",states[k]);
-		
 	}
-	
 	for( k=0;k<n;k++){
 		i=0;
 		strcpy(state,states[k]);
@@ -53,7 +51,6 @@ int main(){
 
 		}
 		display(i);
-		rewind(INPUT);
 	}
   
     return 0;
