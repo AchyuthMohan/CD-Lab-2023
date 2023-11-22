@@ -1,99 +1,60 @@
-#include <stdio.h>
-#include <stdlib.h>
-struct node
-{
-    int st;
-    struct node *link;
-};
+// Program to find epsilon closure of a given NFA
 
-static int states, alpha, trans, r, s, count;
-char alphabets[20], c;
-int buffer[20];
-struct node *transitions[20][20] = {NULL};
-static int e_closure[20][20] = {0};
+#include<stdio.h>
+#include<string.h>
 
-void findclosure(int x, int sta)
-{
-    struct node *temp;
-    int i;
-    if (buffer[x])
-    {
-        return;
-    }
-    e_closure[sta][count++] = x;
-    buffer[x] = 1;
-    if (alphabets[alpha - 1] == 'e' && transitions[x][alpha - 1] != NULL)
-    {
-        temp = transitions[x][alpha - 1];
-        while (temp != NULL)
-        {
-            findclosure(temp->st, sta);
-            temp = temp->link;
-        }
-    }
-}
-int findalpha(char ch)
-{
-    for (int i = 0; i < alpha; i++)
-    {
-        if (alphabets[i] == ch)
-        {
-            return i;
-        }
-    }
-    return 999;
-}
-void insertIntoTable(int r, char c, int s)
-{
-    int j = findalpha(c);
-    struct node *temp;
+char result[20][20],copy[3],states[20][20];
 
-    if (j == 999)
-    {
-        printf("Error");
-        exit(0);
-    }
-    temp = (struct node *)malloc(sizeof(struct node));
-    temp->st = s;
-    temp->link = transitions[r][j];
-    transitions[r][j] = temp;
+void add_state(char a[3],int i){
+	strcpy(result[i],a);
 }
-void printclosure(int i)
-{
-    int j;
-    printf("{");
-    for (j = 0; e_closure[i][j] != 0; j++)
-        printf("q%d,", e_closure[i][j]);
-    printf("}");
+
+void display(int n){
+	int k=0;
+	printf("nnn Epsilon closure of %s = { ",copy);
+	while(k < n){
+		printf(" %s",result[k]);
+		k++;
+	}
+	printf(" } nnn");
 }
-int main()
-{
-    printf("Enter the number of states: ");
-    scanf("%d", &states);
-    printf("Enter the number of alphabets: ");
-    scanf("%d", &alpha);
-    printf("Enter the alphabets: \n");
-    for (int i = 0; i < alpha; i++)
-    {
-        scanf("%c", &alphabets[i]);
-    }
-    printf("Enter the number of transitions: \n");
-    scanf("%d", &trans);
-    printf("Enter the transitions:\n");
-    for (int i = 0; i < trans; i++)
-    {
-        scanf("%d%c%d", &r, &c, &s);
-        insertIntoTable(r, c, s);
-    }
-    for (int i = 1; i <= states; i++)
-    {
-        count = 0;
-        for (int j = 0; j < 20; j++)
-        {
-            buffer[j] = 0;
-            e_closure[i][j] = 0;
-        }
-        findclosure(i, i);
-        printclosure(i);
-    }
+
+int main(){
+    FILE *INPUT;
+    INPUT=fopen("input.dat","r");
+    char state[3];
+    int end,i=0,n,k=0;
+    char state1[3],input[3],state2[3];
+    printf("n Enter the no of states: ");
+    scanf("%d",&n);
+    printf("n Enter the states n");
+    for(k=0;k<3;k++){
+		scanf("%s",states[k]);
+		
+	}
+	
+	for( k=0;k<n;k++){
+		i=0;
+		strcpy(state,states[k]);
+		strcpy(copy,state);
+		add_state(state,i++);
+		while(1){
+			end = fscanf(INPUT,"%s%s%s",state1,input,state2);
+			if (end == EOF ){
+				break;
+			}
+				
+			if( strcmp(state,state1) == 0 ){
+				if( strcmp(input,"e") == 0 ) {
+					add_state(state2,i++);
+					strcpy(state, state2);
+				}
+			}
+
+		}
+		display(i);
+		rewind(INPUT);
+	}
+  
+    return 0;
 }
