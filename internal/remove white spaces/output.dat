@@ -1,0 +1,1 @@
+#include<stdio.h>#include<stdlib.h>intmain(){inta=5;printf("Helloworld!");}

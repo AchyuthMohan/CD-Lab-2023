@@ -1,53 +1,24 @@
 %{
-
-    #include<stdio.h>
-
-    int valid=1;
-
+#include<stdio.h>
+#include<stdlib.h>
 %}
-
-%token digit letter
-
+%token LET DIG
 %%
-
-start : letter s
-
-s :     letter s
-
-      | digit s
-
-      |
-
-      ;
-
+variable:var 
+;
+var:var DIG
+|var LET
+|LET 
+;
 %%
-
-int yyerror()
-
-{
-
-    printf("\nIts not a identifier!\n");
-
-    valid=0;
-
-    return 0;
-
+int main() {
+printf("Enter the variable:\n");
+yyparse();
+printf("Valid variable\n");
+return 0;
 }
-
-int main()
-
+int yyerror()
 {
-
-    printf("\nEnter a name to tested for identifier ");
-
-    yyparse();
-
-    if(valid)
-
-    {
-
-        printf("\nIt is a identifier!\n");
-
-    }
-
+printf("Invalid variable \n");
+exit(0);
 }
