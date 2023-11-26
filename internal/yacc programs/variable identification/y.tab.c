@@ -67,10 +67,10 @@
 
 
 /* First part of user prologue.  */
-#line 1 "main.y"
+#line 1 "prog.y"
 
-#include<stdio.h>
-#include<stdlib.h>
+    #include<stdio.h>
+    #include<stdlib.h>
 
 #line 76 "y.tab.c"
 
@@ -154,8 +154,7 @@ enum yysymbol_kind_t
   YYSYMBOL_LET = 3,                        /* LET  */
   YYSYMBOL_DIG = 4,                        /* DIG  */
   YYSYMBOL_YYACCEPT = 5,                   /* $accept  */
-  YYSYMBOL_variable = 6,                   /* variable  */
-  YYSYMBOL_var = 7                         /* var  */
+  YYSYMBOL_var = 6                         /* var  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -481,18 +480,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  4
+#define YYFINAL  3
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   3
+#define YYLAST   4
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  5
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  3
+#define YYNNTS  2
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  5
+#define YYNRULES  4
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  7
+#define YYNSTATES  6
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   259
@@ -541,7 +540,7 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,     7,     7,     9,    10,    11
+       0,     8,     8,     9,    10
 };
 #endif
 
@@ -558,7 +557,7 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "LET", "DIG",
-  "$accept", "variable", "var", YY_NULLPTR
+  "$accept", "var", YY_NULLPTR
 };
 
 static const char *
@@ -568,7 +567,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-4)
+#define YYPACT_NINF (-3)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -582,7 +581,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -1,    -4,     3,    -3,    -4,    -4,    -4
+      -2,    -3,     0,    -3,    -3,    -3
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -590,19 +589,19 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     5,     0,     2,     1,     4,     3
+       0,     4,     0,     1,     3,     2
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -4,    -4,    -4
+      -3,    -3
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     3
+       0,     2
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -610,31 +609,31 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       5,     6,     1,     4
+       3,     1,     0,     4,     5
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,     4,     3,     0
+       0,     3,    -1,     3,     4
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,     6,     7,     0,     3,     4
+       0,     3,     6,     0,     3,     4
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,     5,     6,     7,     7,     7
+       0,     5,     6,     6,     6
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     2,     2,     1
+       0,     2,     2,     2,     1
 };
 
 
@@ -1098,7 +1097,7 @@ yyreduce:
   switch (yyn)
     {
 
-#line 1102 "y.tab.c"
+#line 1101 "y.tab.c"
 
       default: break;
     }
@@ -1291,16 +1290,17 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 13 "main.y"
+#line 12 "prog.y"
 
-int main() {
-printf("Enter the variable:\n");
-yyparse();
-printf("Valid variable\n");
-return 0;
+
+int main(){
+    printf("Enter the identifier: \n");
+    yyparse();
+    printf("It is an identifier..\n");
+    return 0;
 }
-int yyerror()
-{
-printf("Invalid variable \n");
-exit(0);
+
+int yyerror(){
+    printf("Not an identifier\n");
+    exit(0);
 }
