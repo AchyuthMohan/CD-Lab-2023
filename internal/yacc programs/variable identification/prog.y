@@ -2,23 +2,20 @@
     #include<stdio.h>
     #include<stdlib.h>
 %}
-
-%token LET DIG
-%%
-var:var DIG
-    |var LET
-    | LET
+%token DIG LET
 
 %%
 
+var: var DIG | var LET | LET ;
+
+%%
 int main(){
-    printf("Enter the identifier: \n");
+    printf("Enter the variable \n");
     yyparse();
-    printf("It is an identifier..\n");
+    printf("It is a valid variable\n");
     return 0;
 }
-
 int yyerror(){
-    printf("Not an identifier\n");
+    printf("It is an invalid variable\n");
     exit(0);
 }

@@ -724,22 +724,22 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 6 "prog.l"
-{return DIG;}
+{return DIG; }
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
 #line 7 "prog.l"
-{return 0;}
+{return 0; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 8 "prog.l"
-{return *yytext;}
+{return *yytext; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 9 "prog.l"
+#line 10 "prog.l"
 ECHO;
 	YY_BREAK
 #line 746 "lex.yy.c"
@@ -1747,8 +1747,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 9 "prog.l"
-
+#line 10 "prog.l"
 
 int yywrap(){
     return 1;

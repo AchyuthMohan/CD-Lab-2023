@@ -54,8 +54,8 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    LET = 258,                     /* LET  */
-    DIG = 259                      /* DIG  */
+    DIG = 258,                     /* DIG  */
+    LET = 259                      /* LET  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -64,8 +64,8 @@ extern int yydebug;
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
-#define LET 258
-#define DIG 259
+#define DIG 258
+#define LET 259
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

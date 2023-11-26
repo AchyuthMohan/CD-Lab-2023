@@ -116,8 +116,8 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    LET = 258,                     /* LET  */
-    DIG = 259                      /* DIG  */
+    DIG = 258,                     /* DIG  */
+    LET = 259                      /* LET  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -126,8 +126,8 @@ extern int yydebug;
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
-#define LET 258
-#define DIG 259
+#define DIG 258
+#define LET 259
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -151,8 +151,8 @@ enum yysymbol_kind_t
   YYSYMBOL_YYEOF = 0,                      /* "end of file"  */
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
-  YYSYMBOL_LET = 3,                        /* LET  */
-  YYSYMBOL_DIG = 4,                        /* DIG  */
+  YYSYMBOL_DIG = 3,                        /* DIG  */
+  YYSYMBOL_LET = 4,                        /* LET  */
   YYSYMBOL_YYACCEPT = 5,                   /* $accept  */
   YYSYMBOL_var = 6                         /* var  */
 };
@@ -540,7 +540,7 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,     8,     8,     9,    10
+       0,     9,     9,     9,     9
 };
 #endif
 
@@ -556,7 +556,7 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "LET", "DIG",
+  "\"end of file\"", "error", "\"invalid token\"", "DIG", "LET",
   "$accept", "var", YY_NULLPTR
 };
 
@@ -567,7 +567,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-3)
+#define YYPACT_NINF (-4)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -581,7 +581,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -2,    -3,     0,    -3,    -3,    -3
+      -3,    -4,     0,    -4,    -4,    -4
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -589,13 +589,13 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     4,     0,     1,     3,     2
+       0,     4,     0,     1,     2,     3
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -3,    -3
+      -4,    -4
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -614,14 +614,14 @@ static const yytype_int8 yytable[] =
 
 static const yytype_int8 yycheck[] =
 {
-       0,     3,    -1,     3,     4
+       0,     4,    -1,     3,     4
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,     6,     0,     3,     4
+       0,     4,     6,     0,     3,     4
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
@@ -1290,17 +1290,15 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 12 "prog.y"
-
+#line 11 "prog.y"
 
 int main(){
-    printf("Enter the identifier: \n");
+    printf("Enter the variable \n");
     yyparse();
-    printf("It is an identifier..\n");
+    printf("It is a valid variable\n");
     return 0;
 }
-
 int yyerror(){
-    printf("Not an identifier\n");
+    printf("It is an invalid variable\n");
     exit(0);
 }
