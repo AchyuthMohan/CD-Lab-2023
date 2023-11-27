@@ -6,7 +6,7 @@
 
 %%
 
-var: var DIG | var LET | LET ;
+var: LET  | var LET | var DIG ;
 
 %%
 int main(){

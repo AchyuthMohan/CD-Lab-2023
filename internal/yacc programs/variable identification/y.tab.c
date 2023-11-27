@@ -589,7 +589,7 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     4,     0,     1,     2,     3
+       0,     2,     0,     1,     4,     3
 };
 
 /* YYPGOTO[NTERM-NUM].  */
@@ -633,7 +633,7 @@ static const yytype_int8 yyr1[] =
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     2,     2,     1
+       0,     2,     1,     2,     2
 };
 
 
