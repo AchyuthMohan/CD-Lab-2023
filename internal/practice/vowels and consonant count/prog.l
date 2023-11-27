@@ -1,23 +1,17 @@
 %{
-#include<stdio.h>    
-int vcount=0;
-int ccount=0;
+    #include<stdio.h>
+    #include<stdlib.h>
+    int vowels=0,conso=0;
 %}
-%%
-[ \t\n] ;
-[aeiouAEIOU] {vcount++;}
-[^aeiouAEIOU] {ccount++;}
-%%
 
+%%
+[aeiouAEIOU] {vowels++;}
+[^aeiouAEIOU] {conso++;}
+
+%%
 int main(){
-    printf("Enter the string: \n");
+    printf("Enter the string\n");
     yylex();
-    printf("VCount: %d\n",vcount);
-    printf("CCount: %d\n",ccount);
+    printf("Vowels: %d\n",vowels);
+    printf("Consonants:%d ",conso);
 }
-int yywrap(){
-    return 1;
-}
-
-
-//type CTR + D to get output

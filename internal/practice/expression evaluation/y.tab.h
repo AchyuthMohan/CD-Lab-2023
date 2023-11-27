@@ -54,15 +54,7 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    OPEN_HTML = 258,               /* OPEN_HTML  */
-    CLOSE_HTML = 259,              /* CLOSE_HTML  */
-    OPEN_BODY = 260,               /* OPEN_BODY  */
-    CLOSE_BODY = 261,              /* CLOSE_BODY  */
-    OPEN_HEAD = 262,               /* OPEN_HEAD  */
-    CLOSE_HEAD = 263,              /* CLOSE_HEAD  */
-    OPEN_P = 264,                  /* OPEN_P  */
-    CLOSE_P = 265,                 /* CLOSE_P  */
-    CONTENT = 266                  /* CONTENT  */
+    NUMBER = 258                   /* NUMBER  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -71,15 +63,7 @@ extern int yydebug;
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
-#define OPEN_HTML 258
-#define CLOSE_HTML 259
-#define OPEN_BODY 260
-#define CLOSE_BODY 261
-#define OPEN_HEAD 262
-#define CLOSE_HEAD 263
-#define OPEN_P 264
-#define CLOSE_P 265
-#define CONTENT 266
+#define NUMBER 258
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
