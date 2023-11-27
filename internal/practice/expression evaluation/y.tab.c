@@ -69,15 +69,10 @@
 /* First part of user prologue.  */
 #line 1 "prog.y"
 
-
     #include<stdio.h>
+    #include<stdlib.h>
 
-    int flag=0;
-
-   
-
-
-#line 81 "y.tab.c"
+#line 76 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -550,7 +545,7 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    23,    23,    31,    33,    35,    37,    39,    41,    43
+       0,    12,    12,    16,    17,    18,    19,    20,    21,    22
 };
 #endif
 
@@ -1115,61 +1110,58 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* ArithmeticExpression: E  */
-#line 23 "prog.y"
-                       {
-
-         printf("\nResult=%d\n",yyval);
-
-         return 0;
-
-        }
-#line 1127 "y.tab.c"
+#line 12 "prog.y"
+                        {
+    printf("\nResult=%d\n", yyval);
+    return 0;
+}
+#line 1119 "y.tab.c"
     break;
 
   case 3: /* E: E '+' E  */
-#line 31 "prog.y"
-        {yyval=yyvsp[-2]+yyvsp[0];}
-#line 1133 "y.tab.c"
+#line 16 "prog.y"
+           {yyval = yyvsp[-2] +yyvsp[-1];}
+#line 1125 "y.tab.c"
     break;
 
   case 4: /* E: E '-' E  */
-#line 33 "prog.y"
-        {yyval=yyvsp[-2]-yyvsp[0];}
-#line 1139 "y.tab.c"
+#line 17 "prog.y"
+           {yyval=yyvsp[-2] - yyvsp[-1]; }
+#line 1131 "y.tab.c"
     break;
 
   case 5: /* E: E '*' E  */
-#line 35 "prog.y"
-        {yyval=yyvsp[-2]*yyvsp[0];}
-#line 1145 "y.tab.c"
+#line 18 "prog.y"
+           {yyval=yyvsp[-2]*yyvsp[-1] ;}
+#line 1137 "y.tab.c"
     break;
 
   case 6: /* E: E '/' E  */
-#line 37 "prog.y"
-        {yyval=yyvsp[-2]/yyvsp[0];}
-#line 1151 "y.tab.c"
+#line 19 "prog.y"
+           {yyval=yyvsp[-2]/yyvsp[-1];}
+#line 1143 "y.tab.c"
     break;
 
   case 7: /* E: E '%' E  */
-#line 39 "prog.y"
-        {yyval=yyvsp[-2]%yyvsp[0];}
-#line 1157 "y.tab.c"
+#line 20 "prog.y"
+           {yyval=yyvsp[-2] % yyvsp[-1];}
+#line 1149 "y.tab.c"
     break;
 
   case 8: /* E: '(' E ')'  */
-#line 41 "prog.y"
-          {yyval=yyvsp[-1];}
-#line 1163 "y.tab.c"
+#line 21 "prog.y"
+           {yyval=yyvsp[-1] ;}
+#line 1155 "y.tab.c"
     break;
 
   case 9: /* E: NUMBER  */
-#line 43 "prog.y"
-          {yyval=yyvsp[0];}
-#line 1169 "y.tab.c"
+#line 22 "prog.y"
+          {yyval =yyvsp[0];}
+#line 1161 "y.tab.c"
     break;
 
 
-#line 1173 "y.tab.c"
+#line 1165 "y.tab.c"
 
       default: break;
     }
@@ -1362,34 +1354,15 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 47 "prog.y"
+#line 25 "prog.y"
 
-
-
-
-void main()
-
+ int main()
 {
-
-   printf("\nEnter Any Arithmetic Expression which can have operations Addition, Subtraction, Multiplication, Divison, Modulus and Round brackets:\n");
-
-   yyparse();
-
-  if(flag==0)
-
-   printf("\nEntered arithmetic expression is Valid\n\n");
-
- 
-
+    printf("Enter the expression: \n");
+    yyparse();
+    return 0;
 }
-
-void yyerror()
-
-{
-
-   printf("\nEntered arithmetic expression is Invalid\n\n");
-
-   flag=1;
-
+int yyerror(){
+    printf("Error occured\n");
+    exit(0);
 }
-
