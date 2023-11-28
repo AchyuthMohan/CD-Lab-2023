@@ -8,16 +8,11 @@ void yyerror(const char *);
 
 %}
 
-%token OPEN_HTML CLOSE_HTML OPEN_BODY CLOSE_BODY OPEN_HEAD CLOSE_HEAD OPEN_P CLOSE_P CONTENT
+%token OPEN CLOSE CONTENT
 
 %%
 
-stmt: OPEN_HTML stmt CLOSE_HTML
-    | OPEN_BODY stmt CLOSE_BODY
-    | OPEN_HEAD stmt CLOSE_HEAD
-    | OPEN_P stmt CLOSE_P
-    | CONTENT
-    ;
+stmt: OPEN stmt CLOSE | CONTENT
 
 %%
 

@@ -54,16 +54,16 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    ID = 258,                      /* ID  */
-    NUM = 259,                     /* NUM  */
-    FOR = 260,                     /* FOR  */
-    LE = 261,                      /* LE  */
-    GE = 262,                      /* GE  */
-    EQ = 263,                      /* EQ  */
-    NE = 264,                      /* NE  */
-    OR = 265,                      /* OR  */
-    AND = 266,                     /* AND  */
-    UMINUS = 268                   /* UMINUS  */
+    FOR = 258,                     /* FOR  */
+    LPAREN = 259,                  /* LPAREN  */
+    DATATYPE = 260,                /* DATATYPE  */
+    EQ = 261,                      /* EQ  */
+    ID = 262,                      /* ID  */
+    OP = 263,                      /* OP  */
+    NUMBER = 264,                  /* NUMBER  */
+    SC = 265,                      /* SC  */
+    COMP = 266,                    /* COMP  */
+    RPAREN = 267                   /* RPAREN  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -72,16 +72,16 @@ extern int yydebug;
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
-#define ID 258
-#define NUM 259
-#define FOR 260
-#define LE 261
-#define GE 262
-#define EQ 263
-#define NE 264
-#define OR 265
-#define AND 266
-#define UMINUS 268
+#define FOR 258
+#define LPAREN 259
+#define DATATYPE 260
+#define EQ 261
+#define ID 262
+#define OP 263
+#define NUMBER 264
+#define SC 265
+#define COMP 266
+#define RPAREN 267
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

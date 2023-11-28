@@ -1,67 +1,29 @@
-
 %{
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>    
+#include<stdlib.h>
+int valid=1;
+
 %}
-%token ID NUM FOR LE GE EQ NE OR AND
-%right "="
-%left OR AND
-%left '>' '<' LE GE EQ NE
-%left '+' '-'
-%left '*' '/'
-%right UMINUS
-%left '!'
+
+%token FOR LPAREN DATATYPE EQ ID OP NUMBER SC  COMP RPAREN
 
 %%
-   
-S         : ST {printf("Input accepted\n"); exit(0);}
-ST       : FOR '(' E ';' E2 ';' E ')' DEF
-           ;
-DEF    : '{' BODY '}'
-           | E';'
-           | ST
-           |
-           ;
-BODY  : BODY BODY
-           | E ';'       
-           | ST
-           |            
-           ;
-       
-E        : ID '=' E
-          | E '+' E
-          | E '-' E
-          | E '*' E
-          | E '/' E
-          | E '<' E
-          | E '>' E
-          | E LE E
-          | E GE E
-          | E EQ E
-          | E NE E
-          | E OR E
-          | E AND E
-          | E '+' '+'
-          | E '-' '-'
-          | ID 
-          | NUM
-          ;
-
-   
-E2     : E'<'E
-         | E'>'E
-         | E LE E
-         | E GE E
-         | E EQ E
-         | E NE E
-         | E OR E
-         | E AND E
-         ;   
+STMT:FOR LPAREN DATATYPE ID EQ NUMBER SC ID COMP NUMBER SC ID OP RPAREN
 %%
 
-#include "lex.yy.c"
-main() {
-    printf("Enter the expression:\n");
+
+int yyerror(){
+    printf("UN Matched");
+    valid=0;
+    return 0;
+}
+
+int main(){
+    printf("Enter the statement :\n");
     yyparse();
-}     
-     
+    if(valid){
+        printf("Matched..\n");
+    }
+    
+    return 0;
+}

@@ -1,18 +1,27 @@
-alpha [A-Za-z]
-digit [0-9]
+%{
+    #include "y.tab.h"
+%}
 
 %%
-
-[\t \n]
-for             return FOR;
-{digit}+    return NUM;
-{alpha}({alpha}|{digit})* return ID;
-"<="         return LE;
-">="         return GE;
-"=="         return EQ;
-"!="          return NE;
-"||"            return OR;
-"&&"         return AND;
-.                return yytext[0];
-
+for {return FOR;}
+[=] {return EQ;}
+[(] {return LPAREN; }
+int  {return DATATYPE; }
+float {return DATATYPE; }
+char {return DATATYPE; }
+double {return DATATYPE; }
+[a-zA-Z][a-zA-Z]* {return ID;}
+[+][+] {return OP;}
+[-][-] {return OP;}
+[0-9]+ {return NUMBER; }
+[;] {return SC; }
+[<>]  {return COMP; }
+[<>][=] {return COMP;}
+[)] {return RPAREN; }
+[ ] {}
+[\n \t] {return 0;}
 %%
+
+int yywrap(){
+    return 1;
+}
