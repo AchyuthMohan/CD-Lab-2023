@@ -3,8 +3,8 @@
 %}
 
 %%
-^a[a-zA-Z]* {printf("%s starts with a \n",yytext);}
-[ \n \t] {}
+a[a-zA-Z]* {printf("%s starts with a \n",yytext);}
+
 %%
 int main(){
     printf("Enter the statement:\n");
