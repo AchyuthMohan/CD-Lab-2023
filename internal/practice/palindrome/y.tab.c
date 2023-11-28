@@ -68,20 +68,12 @@
 
 /* First part of user prologue.  */
 #line 1 "prog.y"
- 
-	/* Definition section */
-	#include <stdio.h> 
-	#include <string.h> 
-	#include <stdlib.h> 
-	extern int yylex(); 
-	
-	void yyerror(char *msg); 
-	int flag; 
-	
-	int i; 
-	int k =0;	 
 
-#line 85 "y.tab.c"
+    #include<stdio.h>
+    #include<stdlib.h>
+
+
+#line 77 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -125,7 +117,7 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    STR = 258                      /* STR  */
+    LET = 258                      /* LET  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -134,20 +126,11 @@ extern int yydebug;
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
-#define STR 258
+#define LET 258
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-union YYSTYPE
-{
-#line 15 "prog.y"
- 
-	char* f; 
-
-#line 148 "y.tab.c"
-
-};
-typedef union YYSTYPE YYSTYPE;
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -167,10 +150,9 @@ enum yysymbol_kind_t
   YYSYMBOL_YYEOF = 0,                      /* "end of file"  */
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
-  YYSYMBOL_STR = 3,                        /* STR  */
+  YYSYMBOL_LET = 3,                        /* LET  */
   YYSYMBOL_YYACCEPT = 4,                   /* $accept  */
-  YYSYMBOL_S = 5,                          /* S  */
-  YYSYMBOL_E = 6                           /* E  */
+  YYSYMBOL_start = 5                       /* start  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -496,18 +478,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  4
+#define YYFINAL  3
 /* YYLAST -- Last index in YYTABLE.  */
 #define YYLAST   1
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  4
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  3
+#define YYNNTS  2
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  3
+#define YYNRULES  2
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  5
+#define YYNSTATES  4
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   258
@@ -556,7 +538,7 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    25,    25,    57
+       0,     9,     9
 };
 #endif
 
@@ -572,8 +554,8 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "STR", "$accept", "S",
-  "E", YY_NULLPTR
+  "\"end of file\"", "error", "\"invalid token\"", "LET", "$accept",
+  "start", YY_NULLPTR
 };
 
 static const char *
@@ -597,7 +579,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -3,    -4,     1,    -4,    -4
+      -3,    -4,     1,    -4
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -605,19 +587,19 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     3,     0,     2,     1
+       0,     2,     0,     1
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -4,    -4,    -4
+      -4,    -4
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     3
+       0,     2
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -625,7 +607,7 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       1,     4
+       1,     3
 };
 
 static const yytype_int8 yycheck[] =
@@ -637,19 +619,19 @@ static const yytype_int8 yycheck[] =
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,     5,     6,     0
+       0,     3,     5,     0
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,     4,     5,     6
+       0,     4,     5
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     1
+       0,     2,     1
 };
 
 
@@ -1112,49 +1094,14 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* S: E  */
-#line 25 "prog.y"
-      { 
-		flag = 0; 
-		k = strlen((yyvsp[0].f)) - 1; 
-		if(k%2==0){ 
-		
-		for (i = 0; i <= k/2; i++) { 
-		if ((yyvsp[0].f)[i] == (yyvsp[0].f)[k-i]) { 
-			} else { 
-			flag = 1; 
-			} 
-		} 
-		if (flag == 1) printf("Not palindrome\n"); 
-		else printf("palindrome\n"); 
-		printf("%s\n", (yyvsp[0].f)); 
-		
-		}else{ 
-		
-		for (i = 0; i < k/2; i++) { 
-		if ((yyvsp[0].f)[i] == (yyvsp[0].f)[k-i]) { 
-		} else { 
-			flag = 1; 
-			} 
-			} 
-		if (flag == 1) printf("Not palindrome\n"); 
-		else printf("palindrome\n"); 
-		printf("%s\n", (yyvsp[0].f));		 
-		
-
-		} 
-	}
-#line 1148 "y.tab.c"
-    break;
-
-  case 3: /* E: STR  */
-#line 57 "prog.y"
-        {(yyval.f) = (yyvsp[0].f);}
-#line 1154 "y.tab.c"
+  case 2: /* start: LET  */
+#line 9 "prog.y"
+           {if(isPalindrome(yyvsp[0])) printf("palindrome"); else printf("not palindrome");}
+#line 1101 "y.tab.c"
     break;
 
 
-#line 1158 "y.tab.c"
+#line 1105 "y.tab.c"
 
       default: break;
     }
@@ -1347,18 +1294,28 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 60 "prog.y"
- 
+#line 10 "prog.y"
 
-void yyerror(char *msg) 
-{ 
-	fprintf(stderr, "%s\n", msg); 
-	exit(1); 
-} 
 
-//driver code 
-int main() 
-{ 
-	yyparse(); 
-	return 0; 
-} 
+
+int main(){
+    printf("Enter teh expresion:\n");
+    yyparse();
+    return 0;
+}
+int yyerror(){
+    printf("No\n");
+    exit(0);
+}
+int isPalindrome(char *temp){
+    int i=0;
+    int j=strlen(temp)-1;
+    while(i<j){
+        if(temp[i]!=temp[j]){
+            return 0;
+        }
+        i++;
+        j--;
+    }
+    return 1;
+}

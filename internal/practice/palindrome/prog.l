@@ -1,15 +1,11 @@
-%{ 
-	#include <stdio.h> 
-	#include <stdlib.h> 
-	#include "y.tab.h" 
-%} 
-%% 
-[a-zA-Z]+ {yylval.f = yytext; return STR;} 
-[-+()*/] {return yytext[0];} 
-[ \t\n]	 {;} 
-%% 
-
-int yywrap() 
-{ 
-return -1; 
-} 
+%{
+    #include "y.tab.h"
+    extern int yylval;
+%}
+%%
+[a-zA-Z] {return LET;}
+[0-9] {return LET;}
+%%
+int yywrap(){
+    return 1;
+}
