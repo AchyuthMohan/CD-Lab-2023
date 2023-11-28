@@ -8,11 +8,12 @@ void yyerror(const char *);
 
 %}
 
-%token OPEN CLOSE CONTENT
+%token OPEN CLOSE  TAG SLASH LETTER
 
 %%
 
-stmt: OPEN stmt CLOSE | CONTENT
+stmt: OPEN TAG CLOSE CONTENT OPEN SLASH TAG CLOSE 
+CONTENT: stmt stmt | LETTER
 
 %%
 
