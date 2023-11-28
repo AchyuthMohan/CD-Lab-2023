@@ -3,19 +3,20 @@
 #include<stdlib.h>    
 %}
 
-%token ZERO ONE ANY
+%token ZERO ONE
 %%
 stmt: ZERO ANY ZERO | ONE ANY ONE
+ANY: ANY ZERO|ANY ONE |ZERO|ONE
 %%
 
 int main(){
     printf("Enter the input: \n");
     yyparse();
-    printf("Accepted");
+    printf("Accepted\n");
     return 0;
 }
 
 int yyerror(){
-    printf("rejected");
+    printf("rejected\n");
     exit(0);
 }

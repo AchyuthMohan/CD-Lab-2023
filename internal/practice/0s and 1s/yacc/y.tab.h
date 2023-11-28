@@ -55,8 +55,7 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     ZERO = 258,                    /* ZERO  */
-    ONE = 259,                     /* ONE  */
-    ANY = 260                      /* ANY  */
+    ONE = 259                      /* ONE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -67,7 +66,6 @@ extern int yydebug;
 #define YYUNDEF 257
 #define ZERO 258
 #define ONE 259
-#define ANY 260
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
