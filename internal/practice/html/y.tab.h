@@ -54,18 +54,11 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    FOR = 258,                     /* FOR  */
-    LPAREN = 259,                  /* LPAREN  */
-    DATATYPE = 260,                /* DATATYPE  */
-    EQ = 261,                      /* EQ  */
-    ID = 262,                      /* ID  */
-    OP = 263,                      /* OP  */
-    NUMBER = 264,                  /* NUMBER  */
-    SC = 265,                      /* SC  */
-    COMP = 266,                    /* COMP  */
-    RPAREN = 267,                  /* RPAREN  */
-    RCURLY = 268,                  /* RCURLY  */
-    LCURLY = 269                   /* LCURLY  */
+    TAG = 258,                     /* TAG  */
+    SLASH = 259,                   /* SLASH  */
+    OPEN = 260,                    /* OPEN  */
+    CLOSE = 261,                   /* CLOSE  */
+    LETTER = 262                   /* LETTER  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -74,18 +67,11 @@ extern int yydebug;
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
-#define FOR 258
-#define LPAREN 259
-#define DATATYPE 260
-#define EQ 261
-#define ID 262
-#define OP 263
-#define NUMBER 264
-#define SC 265
-#define COMP 266
-#define RPAREN 267
-#define RCURLY 268
-#define LCURLY 269
+#define TAG 258
+#define SLASH 259
+#define OPEN 260
+#define CLOSE 261
+#define LETTER 262
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
