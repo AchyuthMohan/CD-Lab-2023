@@ -1,10 +1,12 @@
 %{
-    #include "y.tab.h"
+#include "y.tab.h"
 %}
 
 %%
-[a-zA-Z0-9]* {return LET;}
+[a-zA-Z]* {return CHAR;}
 %%
+
 int yywrap(){
-    return 1;
+return 1;
 }
+

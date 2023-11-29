@@ -69,10 +69,10 @@
 /* First part of user prologue.  */
 #line 1 "prog.y"
 
-    #include<stdio.h>
-    #include<stdlib.h>
-    int i=0,j,flag=0;
-    extern char *yytext;
+#include<stdio.h>
+#include<stdlib.h>
+int i=0,j,flag=0;
+extern char *yytext;
 
 #line 78 "y.tab.c"
 
@@ -118,7 +118,7 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    LET = 258                      /* LET  */
+    CHAR = 258                     /* CHAR  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -127,7 +127,7 @@ extern int yydebug;
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
-#define LET 258
+#define CHAR 258
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -151,7 +151,7 @@ enum yysymbol_kind_t
   YYSYMBOL_YYEOF = 0,                      /* "end of file"  */
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
-  YYSYMBOL_LET = 3,                        /* LET  */
+  YYSYMBOL_CHAR = 3,                       /* CHAR  */
   YYSYMBOL_YYACCEPT = 4,                   /* $accept  */
   YYSYMBOL_input = 5                       /* input  */
 };
@@ -539,7 +539,7 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    11,    11
+       0,    10,    10
 };
 #endif
 
@@ -555,7 +555,7 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "LET", "$accept",
+  "\"end of file\"", "error", "\"invalid token\"", "CHAR", "$accept",
   "input", YY_NULLPTR
 };
 
@@ -1095,30 +1095,31 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* input: LET  */
-#line 11 "prog.y"
+  case 2: /* input: CHAR  */
+#line 10 "prog.y"
             {
-    j=strlen(yytext);
-    while(i<j){
-        if(yytext[i]!=yytext[j]){
-            flag=1;
-            break;
-        }
-        i++;
-        j--;
-    }
-    if(flag==1){
-        printf("not palindrome\n");
-    }
-    else{
-        printf("palindrome\n");
-    }
+	while(i<j){
+		if(yytext[i]!=yytext[j]){
+			flag=1;
+			break;	
+		}
+		i++;
+		j--;
+	}
+if(flag==1){
+	printf("Not palindrome");
+	return 0;
 }
-#line 1118 "y.tab.c"
+else{
+printf("Palindrome");
+return 0;
+}
+}
+#line 1119 "y.tab.c"
     break;
 
 
-#line 1122 "y.tab.c"
+#line 1123 "y.tab.c"
 
       default: break;
     }
@@ -1311,14 +1312,15 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 28 "prog.y"
+#line 29 "prog.y"
+
 
 int main(){
-    printf("enter the text: \n");
-    yyparse();
-    return 0;
+	printf("Enter the text: \n");
+	yyparse();
+	return 0;
 }
 int yyerror(){
-    printf("error\n");
-    exit(0);
+	printf("Error\n");
+	exit(0);
 }

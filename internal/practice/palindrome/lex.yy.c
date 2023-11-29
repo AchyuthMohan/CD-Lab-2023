@@ -371,8 +371,8 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    2,    2,    2,
-        2,    2,    2,    2,    2,    2,    2,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    2,    2,    2,    2,    2,    2,
         2,    2,    2,    2,    2,    2,    2,    2,    2,    2,
         2,    2,    2,    2,    2,    2,    2,    2,    2,    2,
@@ -438,7 +438,7 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "prog.l"
 #line 2 "prog.l"
-    #include "y.tab.h"
+#include "y.tab.h"
 #line 443 "lex.yy.c"
 #line 444 "lex.yy.c"
 
@@ -719,7 +719,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 6 "prog.l"
-{return LET;}
+{return CHAR;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
@@ -1733,6 +1733,9 @@ void yyfree (void * ptr )
 
 #line 7 "prog.l"
 
+
 int yywrap(){
-    return 1;
+return 1;
 }
+
+
