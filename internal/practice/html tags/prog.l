@@ -1,17 +1,17 @@
 %{
-#include "y.tab.h"    
+    #include "y.tab.h"
 %}
 
 %%
 [<] {return OPEN;}
 [/] {return SLASH;}
-[>] {return CLOSE; }
+[>] {return CLOSE;}
 (html|p|head|body) {return TAG;}
-[a-zA-Z]* {return LETTER ;}
+[a-zA-Z]* {return LETTER; }
 [ ] {return LETTER;}
 [\n\t] {return 0;}
 %%
 
-int yywrap() {
+int yywrap(){
     return 1;
 }

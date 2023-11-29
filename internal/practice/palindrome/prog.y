@@ -1,33 +1,37 @@
 %{
     #include<stdio.h>
     #include<stdlib.h>
-
+    int i=0,j,flag=0;
+    extern char *yytext;
 %}
+
 %token LET
 
 %%
-start: LET {if(isPalindrome($1)) printf("palindrome"); else printf("not palindrome");};
-%%
-
-int isPalindrome(char *temp){
-    int i=0;
-    int j=strlen(temp)-1;
+input : LET {
+    j=strlen(yytext);
     while(i<j){
-        if(temp[i]!=temp[j]){
-            return 0;
+        if(yytext[i]!=yytext[j]){
+            flag=1;
+            break;
         }
         i++;
         j--;
     }
-    return 1;
-}
-
+    if(flag==1){
+        printf("not palindrome\n");
+    }
+    else{
+        printf("palindrome\n");
+    }
+};
+%%
 int main(){
-    printf("Enter teh expresion:\n");
+    printf("enter the text: \n");
     yyparse();
     return 0;
 }
 int yyerror(){
-    printf("No\n");
+    printf("error\n");
     exit(0);
 }

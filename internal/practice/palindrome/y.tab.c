@@ -71,9 +71,10 @@
 
     #include<stdio.h>
     #include<stdlib.h>
+    int i=0,j,flag=0;
+    extern char *yytext;
 
-
-#line 77 "y.tab.c"
+#line 78 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -152,7 +153,7 @@ enum yysymbol_kind_t
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
   YYSYMBOL_LET = 3,                        /* LET  */
   YYSYMBOL_YYACCEPT = 4,                   /* $accept  */
-  YYSYMBOL_start = 5                       /* start  */
+  YYSYMBOL_input = 5                       /* input  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -538,7 +539,7 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,     9,     9
+       0,    11,    11
 };
 #endif
 
@@ -555,7 +556,7 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "LET", "$accept",
-  "start", YY_NULLPTR
+  "input", YY_NULLPTR
 };
 
 static const char *
@@ -1094,14 +1095,30 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* start: LET  */
-#line 9 "prog.y"
-           {if(isPalindrome(yyvsp[0])) printf("palindrome"); else printf("not palindrome");}
-#line 1101 "y.tab.c"
+  case 2: /* input: LET  */
+#line 11 "prog.y"
+            {
+    j=strlen(yytext);
+    while(i<j){
+        if(yytext[i]!=yytext[j]){
+            flag=1;
+            break;
+        }
+        i++;
+        j--;
+    }
+    if(flag==1){
+        printf("not palindrome\n");
+    }
+    else{
+        printf("palindrome\n");
+    }
+}
+#line 1118 "y.tab.c"
     break;
 
 
-#line 1105 "y.tab.c"
+#line 1122 "y.tab.c"
 
       default: break;
     }
@@ -1294,28 +1311,14 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 10 "prog.y"
-
-
+#line 28 "prog.y"
 
 int main(){
-    printf("Enter teh expresion:\n");
+    printf("enter the text: \n");
     yyparse();
     return 0;
 }
 int yyerror(){
-    printf("No\n");
+    printf("error\n");
     exit(0);
-}
-int isPalindrome(char *temp){
-    int i=0;
-    int j=strlen(temp)-1;
-    while(i<j){
-        if(temp[i]!=temp[j]){
-            return 0;
-        }
-        i++;
-        j--;
-    }
-    return 1;
 }

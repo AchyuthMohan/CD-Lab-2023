@@ -56,8 +56,8 @@ extern int yydebug;
     YYUNDEF = 257,                 /* "invalid token"  */
     OPEN = 258,                    /* OPEN  */
     CLOSE = 259,                   /* CLOSE  */
-    TAG = 260,                     /* TAG  */
-    SLASH = 261,                   /* SLASH  */
+    SLASH = 260,                   /* SLASH  */
+    TAG = 261,                     /* TAG  */
     LETTER = 262                   /* LETTER  */
   };
   typedef enum yytokentype yytoken_kind_t;
@@ -69,8 +69,8 @@ extern int yydebug;
 #define YYUNDEF 257
 #define OPEN 258
 #define CLOSE 259
-#define TAG 260
-#define SLASH 261
+#define SLASH 260
+#define TAG 261
 #define LETTER 262
 
 /* Value type.  */

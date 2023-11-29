@@ -453,7 +453,7 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "prog.l"
 #line 2 "prog.l"
-#include "y.tab.h"    
+    #include "y.tab.h"
 #line 458 "lex.yy.c"
 #line 459 "lex.yy.c"
 
@@ -744,7 +744,7 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 8 "prog.l"
-{return CLOSE; }
+{return CLOSE;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
@@ -754,7 +754,7 @@ YY_RULE_SETUP
 case 5:
 YY_RULE_SETUP
 #line 10 "prog.l"
-{return LETTER ;}
+{return LETTER; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
@@ -1780,7 +1780,6 @@ void yyfree (void * ptr )
 #line 13 "prog.l"
 
 
-int yywrap() {
+int yywrap(){
     return 1;
 }
-

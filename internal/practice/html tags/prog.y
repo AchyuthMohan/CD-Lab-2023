@@ -1,30 +1,24 @@
 %{
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-int yylex();
-void yyerror(const char *);
-
+    #include<stdio.h>
+    #include<stdlib.h>
+    #include<string.h>
+    int yyerror();
 %}
 
-%token OPEN CLOSE  TAG SLASH LETTER
-
+%token OPEN CLOSE SLASH TAG LETTER
 %%
 
-stmt: OPEN TAG CLOSE CONTENT OPEN SLASH TAG CLOSE 
-CONTENT: stmt stmt | LETTER
-
+stmt: OPEN TAG CLOSE CONTENT OPEN SLASH TAG CLOSE
+CONTENT: LETTER | stmt stmt 
 %%
 
-int main() {
-    printf("Enter the statement: \n");
+int main(){
+    printf("Enter the content: \n");
     yyparse();
-    printf("Valid\n");
+    printf("valid\n");
     return 0;
 }
-
-void yyerror(const char *s) {
-    printf("Invalid: %s\n", s);
+int yyerror(){
+    printf("Error\n");
     exit(1);
 }
