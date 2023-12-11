@@ -14,10 +14,7 @@ void first(char ch){
     }
     for(int i=0;i<n;i++){
         if(a[i][0]==ch){
-            if(a[i][2]=='$'){
-                follow(ch);
-            }
-            else if(islower(a[i][2])){
+            if(islower(a[i][2])){
                 f[m++]=a[i][2];
             }
             else{
