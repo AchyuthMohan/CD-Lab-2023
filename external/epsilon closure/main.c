@@ -1,66 +1,62 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-char result[20][20], copy[3], states[20][20];
+int n;
+char states[20][3], state[3], state1[3], state2[3], input[3], result[20][20], copy[3];
 
-void add_state(char a[3], int i)
+void display(int x)
+{
+    printf("Epsilon closure of %s: ", copy);
+    for (int i = 0; i <= x; i++)
+    {
+        printf(" %s", result[i]);
+    }
+    printf("\n");
+}
+
+void addState(int i, char a[3])
 {
     strcpy(result[i], a);
 }
-
-void display(int n)
-{
-    int k = 0;
-    printf("nnn Epsilon closure of %s = { ", copy);
-    while (k < n)
-    {
-        printf(" %s", result[k]);
-        k++;
-    }
-    printf(" } nnn");
-}
-
 int main()
 {
-    FILE *INPUT;
-    INPUT = fopen("input.dat", "r");
-    char state[3];
-    int end, i = 0, n, k = 0;
-    char state1[3], input[3], state2[3];
-    printf("n Enter the no of states: ");
+    FILE *fp;
+    fp = fopen("input.dat", "r");
+    printf("Enter the number of states: \n");
     scanf("%d", &n);
-    printf("n Enter the states n");
-    for (k = 0; k < n; k++)
+    printf("Enter the states: \n");
+    for (int i = 0; i < n; i++)
     {
-        scanf("%s", states[k]);
+        scanf("%s", states[i]);
     }
 
-    for (k = 0; k < n; k++)
+    int x = 0;
+    int end;
+    for (int i = 0; i < n; i++)
     {
-        i = 0;
-        strcpy(state, states[k]);
+        strcpy(state, states[i]);
         strcpy(copy, state);
-        add_state(state, i++);
+        addState(x++, state);
+
         while (1)
         {
-            end = fscanf(INPUT, "%s%s%s", state1, input, state2);
+            end = fscanf(fp, "%s%s%s", state1, input, state2);
             if (end == EOF)
             {
                 break;
             }
-
             if (strcmp(state, state1) == 0)
             {
                 if (strcmp(input, "e") == 0)
                 {
-                    add_state(state2, i++);
                     strcpy(state, state2);
+                    addState(x++, state2);
                 }
             }
         }
         display(i);
-        // rewind(INPUT);
+        rewind(fp);
     }
-
     return 0;
 }
