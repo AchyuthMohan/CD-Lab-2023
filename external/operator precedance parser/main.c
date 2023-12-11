@@ -4,25 +4,25 @@
 
 int main()
 {
-  int n, top = 0, k = 0, row = 0, col = 0;
-  char opt[10][10][1], ter[10], ip[10], stack[20];
-
+  int n, top = 0, k = 0, col = 0, row = 0;
+  char stack[20], ip[10], opt[10][10][1], ter[10];
   printf("Enter the number of terminals: \n");
   scanf("%d", &n);
   printf("Enter the terminals: \n");
   scanf("%s", ter);
-  printf("Enter the operation precedence table: \n");
+  printf("Enter the precendence table: \n");
   for (int i = 0; i < n; i++)
   {
     for (int j = 0; j < n; j++)
     {
-      printf("Enter the precendence for %c %c: ", ter[i], ter[j]);
+      printf("Enter the value for %c %c: ", ter[i], ter[j]);
       scanf("%s", opt[i][j]);
     }
   }
+  printf("Precendence table: \n");
   for (int i = 0; i < n; i++)
   {
-    printf("\t%c\t", ter[i]);
+    printf("\t%c", ter[i]);
   }
   printf("\n");
   for (int i = 0; i < n; i++)
@@ -33,12 +33,13 @@ int main()
       printf("\t%c", opt[i][j][0]);
     }
   }
-  stack[top] = '$';
-  printf("Enter the input string: \n");
+
+  printf("Enter the input string: ");
   scanf("%s", ip);
-  printf("\nSTACK\t\t\tINPUT\t\t\tACTION\n");
+
+  stack[top] = '$';
+  printf("STACK\t\t\tINPUT\t\t\tACTION\n");
   printf("%s\t\t\t%s\t\t\t", stack, ip);
-  k = 0;
   while (k <= strlen(ip))
   {
     for (int i = 0; i < n; i++)
@@ -52,7 +53,7 @@ int main()
         row = i;
       }
     }
-    if (stack[top] == '$' && ip[k] == '$')
+    if ((stack[top] == '$') && (ip[k] == '$'))
     {
       printf("String Accepted..\n");
       break;
@@ -61,7 +62,7 @@ int main()
     {
       stack[++top] = opt[col][row][0];
       stack[++top] = ip[k];
-      printf("shift %c\n", ip[k]);
+      printf("Shifted: %c\n", ip[k]);
       k++;
     }
     else
@@ -73,11 +74,11 @@ int main()
           top--;
         }
         top = top - 1;
-        printf("Reduce \n");
+        printf("Reduce\n");
       }
       else
       {
-        printf("String not accepted\n");
+        printf("String not accepted \n");
         break;
       }
     }
