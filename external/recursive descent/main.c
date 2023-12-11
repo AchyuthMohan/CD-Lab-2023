@@ -1,33 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 char string[64];
-const char *cursor;
-
-int E(), EDash(), T(), TDash(), F();
+char *cursor;
+int E(), Edash(), T(), Tdash(), F();
 
 int main()
 {
-    printf("Enter the input string: ");
+    printf("Enter the string: ");
     scanf("%s", string);
     cursor = string;
     if (E() && *cursor == '\0')
     {
-        printf("Accepted...");
+        printf("Parsing successfull\n");
         return 0;
     }
     else
     {
-        printf("String not accepted..\n");
-        exit(0);
+        printf("Error in parsing\n");
+        return 1;
     }
 }
+
 int E()
 {
-    printf("%s E->TE'\n", cursor);
+    printf("E->TE'\n");
     if (T())
     {
-        if (EDash())
+        if (Edash())
         {
             return 1;
         }
@@ -36,20 +37,49 @@ int E()
             return 0;
         }
     }
-    else
-    {
-        return 0;
-    }
+    return 0;
 }
-int EDash()
+int Edash()
 {
     if (*cursor == '+')
     {
-        printf("%-16s E' -> + T E'\n", cursor);
         cursor++;
         if (T())
         {
-            if (EDash())
+            if (Edash())
+            {
+                return 1;
+            }
+            return 0;
+        }
+        return 0;
+    }
+    else
+    {
+       return 1;
+    }
+}
+int T()
+{
+    if (F())
+    {
+        if (Tdash())
+        {
+            return 1;
+        }
+        return 0;
+    }
+    return 0;
+}
+int Tdash()
+{
+    if (*cursor == '*')
+    {
+        printf("%-16s T' -> * F T'\n", cursor);
+        cursor++;
+        if (F())
+        {
+            if (Tdash())
                 return 1;
             else
                 return 0;
@@ -59,62 +89,32 @@ int EDash()
     }
     else
     {
-        printf("%-16s E' -> $\n", cursor);
         return 1;
     }
 }
-int T()
+int F()
 {
-    printf("%-16s T -> F T'\n", cursor);  
-    if (F())
+    if (*cursor == '(')
     {
-        if (TDash())
-        {
-            return 1;
-        }
-        return 0;
-    }
-    return 0;
-}
-int TDash()
-{
-    if (*cursor == '*')
-    {
-        printf("%s T'->*FT'\n", cursor);
         cursor++;
-        if (F())
+        if (E())
         {
-            if (TDash())
+            if (*cursor == ')')
             {
+                cursor++;
                 return 1;
             }
             return 0;
         }
         return 0;
     }
-    else {  
-        printf("%-16s T' -> $\n", cursor);  
-        return 1;  
-    }  
-    
-}
-int F()
-{
-     if (*cursor == '(') {  
-        printf("%-16s F -> ( E )\n", cursor);  
-        cursor++;  
-        if (E()) {  
-            if (*cursor == ')') {  
-                cursor++;  
-                return 1;  
-            } else  
-                return 0;  
-        } else  
-            return 0;  
-    } else if (*cursor == 'i') {  
-        cursor++;  
-        printf("%-16s F ->i\n", cursor);  
-        return 1;  
-    } else  
-        return 0;  
+    else if (*cursor == 'i')
+    {
+        cursor++;
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
