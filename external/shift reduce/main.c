@@ -1,86 +1,86 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-
-char ip_sym[15],stack[15];
-int ip_ptr=0,st_ptr=0,len,i;
-char temp[2],temp2[2];
-char act[15];
+#include <stdio.h>
+#include <string.h>
+int k = 0, z = 0, i = 0, j = 0, c = 0;
+char a[16], ac[20], stk[15], act[10];
 void check();
-void main()
+int main()
 {
-printf("\n\t\t SHIFT REDUCE PARSER\n");
-printf("\n GRAMMER\n");
-printf("\n E->E+E\n E->E/E");
-printf("\n E->E*E\n E->a/b");
-printf("\n enter the input symbol:\t");
-gets(ip_sym);
-printf("\n\t stack implementation table");
-printf("\n stack \t\t input symbol\t\t action");
-printf("\n________\t\t____________\t\t____________\n");
-printf("\n $\t\t%s$\t\t\t--",ip_sym);
-strcpy(act,"shift");
-temp[0]=ip_sym[ip_ptr];
-temp[1]='\0';
-strcat(act,temp);
-len=strlen(ip_sym);
-for(i=0;i<=len-1;i++)
-{
-stack[st_ptr]=ip_sym[ip_ptr];
-stack[st_ptr+1]='\0';
-ip_sym[ip_ptr]=' ';
-ip_ptr++;
-printf("\n $%s\t\t%s$\t\t\t%s",stack,ip_sym,act);
-strcpy(act,"shift");
-temp[0]=ip_sym[ip_ptr];
-temp[1]='\0';
-strcat(act,temp);
-check();
-st_ptr++;
-}
-st_ptr++;
-check();
+
+    puts("GRAMMAR is E->E+E \n E->E*E \n E->(E) \n E->id");
+    puts("enter input string ");
+    scanf("%s", a);
+    c = strlen(a);
+    strcpy(act, "SHIFT->");
+    puts("stack \t input \t action");
+    for (k = 0, i = 0; j < c; k++, i++, j++)
+    {
+        if (a[j] == 'i' && a[j + 1] == 'd')
+        {
+            stk[i] = a[j];
+            stk[i + 1] = a[j + 1];
+            stk[i + 2] = '\0';
+            a[j] = ' ';
+            a[j + 1] = ' ';
+            printf("\n$%s\t%s$\t%sid", stk, a, act);
+            check();
+        }
+        else
+        {
+            stk[i] = a[j];
+            stk[i + 1] = '\0';
+            a[j] = ' ';
+            printf("\n$%s\t%s$\t%ssymbols", stk, a, act);
+            check();
+        }
+    }
 }
 void check()
 {
-int flag=0;
-temp2[0]=stack[st_ptr];
-temp2[1]='\0';
-if((!strcmp(temp2,"a"))||(!strcmp(temp2,"b")))
-{
-stack[st_ptr]='E';
-if(!strcmp(temp2,"a"))
-printf("\n $%s\t\t%s$\t\t\tE->a",stack,ip_sym);
-else
-printf("\n $%s\t\t%s$\t\t\tE->b",stack,ip_sym);
-flag=1;
-}
-if((!strcmp(temp2,"+"))||(strcmp(temp2,"*"))||(!strcmp(temp2,"/"))) { flag=1;
-}
-if((!strcmp(stack,"E+E"))||(!strcmp(stack,"E\E"))||(!strcmp(stack,"E*E")))
-{
-strcpy(stack,"E");
-st_ptr=0;
-if(!strcmp(stack,"E+E"))
-printf("\n $%s\t\t%s$\t\t\tE->E+E",stack,ip_sym);
-else
-if(!strcmp(stack,"E\E"))
-printf("\n $%s\t\t%s$\t\t\tE->E\E",stack,ip_sym);
-else if(!strcmp(stack,"E*E"))
-printf("\n $%s\t\t%s$\t\t\tE->E*E",stack,ip_sym);
-else
-printf("\n $%s\t\t%s$\t\t\tE->E+E",stack,ip_sym);
-flag=1;
-}
-if(!strcmp(stack,"E")&&ip_ptr==len)
-{
-printf("\n $%s\t\t%s$\t\t\tACCEPT",stack,ip_sym);
-exit(0);
-}
-if(flag==0)
-{
-printf("\n%s\t\t\t%s\t\t reject",stack,ip_sym);
-exit(0);
-}
-return;
+    strcpy(ac, "REDUCE TO E");
+    for (z = 0; z < c; z++)
+    {
+        if (stk[z] == 'i' && stk[z + 1] == 'd')
+        {
+            stk[z] = 'E';
+            stk[z + 1] = '\0';
+            printf("\n$%s\t%s$\t%s", stk, a, ac);
+            j++;
+        }
+    }
+
+    for (z = 0; z < c; z++)
+    {
+        if (stk[z] == 'E' && stk[z + 1] == '+' && stk[z + 2] == 'E')
+        {
+            stk[z] = 'E';
+            stk[z + 1] = '\0';
+            stk[z + 2] = '\0';
+            printf("\n$%s\t%s$\t%s", stk, a, ac);
+            i = i - 2;
+        }
+    }
+
+    for (z = 0; z < c; z++)
+    {
+        if (stk[z] == 'E' && stk[z + 1] == '*' && stk[z + 2] == 'E')
+        {
+            stk[z] = 'E';
+            stk[z + 1] = '\0';
+            stk[z + 1] = '\0';
+            printf("\n$%s\t%s$\t%s", stk, a, ac);
+            i = i - 2;
+        }
+    }
+
+    for (z = 0; z < c; z++)
+    {
+        if (stk[z] == '(' && stk[z + 1] == 'E' && stk[z + 2] == ')')
+        {
+            stk[z] = 'E';
+            stk[z + 1] = '\0';
+            stk[z + 1] = '\0';
+            printf("\n$%s\t%s$\t%s", stk, a, ac);
+            i = i - 2;
+        }
+    }
 }
