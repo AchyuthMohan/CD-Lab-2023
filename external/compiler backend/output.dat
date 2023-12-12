@@ -1,0 +1,16 @@
+
+MOV R0,a
+ADD b
+MOV a,R0
+MOV R0,a
+MUL b
+MOV a,R0
+MOV R0,c
+ADD d
+MOV b,R0
+MOV R0,a
+SUB b
+MOV d,R0
+MOV R0,a
+SUB b
+MOV d,R0
