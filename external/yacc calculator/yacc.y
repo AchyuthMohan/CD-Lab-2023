@@ -1,35 +1,37 @@
 %{
-    #include<stdio.h>
-    #include<stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>    
 %}
 
-%token NUMBER
+%token NUMBER;
 %left '+' '-'
+
 %left '*' '/' '%'
+
 %left '(' ')'
 
 %%
 ArithmeticExpression: E {
-    printf("\nResult=%d\n", $$);
+    printf("Result is: %d\n",$$);
     return 0;
 };
-E: E '+' E {$$ = $1 +$2;}
- | E '-' E {$$=$1 - $2; }
- | E '*' E {$$=$1*$2 ;}
- | E '/' E {$$=$1/$2;}
- | E '%' E {$$=$1 % $2;}
- | '('E')' {$$=$2 ;}
- | NUMBER {$$ =$1;}
- ;
+E:E'+'E {$$=$1+$3;}
+|E'-'E  {$$=$1-$3;}
+|E'*'E  {$$=$1*$3;}
+|E'/'E  {$$=$1/$3;}
+|E'%'E  {$$=$1%$3;}
+|'('E')' {$$=$2;}
+| NUMBER {$$=$1;}
+;
 
- %%
- int main()
-{
-    printf("Enter the expression: \n");
+%%
+int main(){
+    printf("Enter the expression: ");
     yyparse();
     return 0;
 }
 int yyerror(){
-    printf("Error occured\n");
-    exit(0);
+    printf("Error\n");
+    exit(1);
 }
+
