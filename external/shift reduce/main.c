@@ -12,7 +12,7 @@ int main()
     c = strlen(a);
     strcpy(act, "SHIFT->");
     puts("stack \t input \t action");
-    for (k = 0, i = 0; j < c; k++, i++, j++)
+    for ( i = 0,j=0; j < c; i++, j++)
     {
         if (a[j] == 'i' && a[j + 1] == 'd')
         {
