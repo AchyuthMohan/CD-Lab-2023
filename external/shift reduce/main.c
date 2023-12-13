@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 char ip[20], stack[20], shift[20], reduce[20];
-int top = 0;
 int i = 0, j = 0, z = 0, n;
+
 void check()
 {
     for (z = 0; z < n; z++)
@@ -14,7 +13,7 @@ void check()
         {
             stack[z] = 'E';
             stack[z + 1] = '\0';
-            printf("$%s\t\t%s\t\t%s\n", stack, ip, reduce);
+            printf("%s\t\t%s\t\t%s\n", stack, ip, reduce);
             j++;
         }
     }
@@ -25,8 +24,8 @@ void check()
             stack[z] = 'E';
             stack[z + 1] = '\0';
             stack[z + 2] = '\0';
-            printf("$%s\t\t%s\t\t%s\n", stack, ip, reduce);
-            i--;
+            printf("%s\t\t%s\t\t%s\n", stack, ip, reduce);
+            i=i-1;
         }
     }
     for (z = 0; z < n; z++)
@@ -36,8 +35,8 @@ void check()
             stack[z] = 'E';
             stack[z + 1] = '\0';
             stack[z + 2] = '\0';
-            printf("$%s\t\t%s\t\t%s\n", stack, ip, reduce);
-            i--;
+            printf("%s\t\t%s\t\t%s\n", stack, ip, reduce);
+            i=i-1;
         }
     }
     for (z = 0; z < n; z++)
@@ -47,18 +46,19 @@ void check()
             stack[z] = 'E';
             stack[z + 1] = '\0';
             stack[z + 2] = '\0';
-            printf("$%s\t\t%s\t\t%s\n", stack, ip, reduce);
-            i--;
+            printf("%s\t\t%s\t\t%s\n", stack, ip, reduce);
+            i=i-1;
         }
     }
 }
 int main()
 {
-    printf("Grammar: \nE->E+E | E*E | E/E | id\n");
-    printf("Enter the input: ");
+    strcpy(shift, "SHIFT");
+    strcpy(reduce, "REDUCE");
+    printf("Grammar: \n E->E+E | E*E | E/E | id\n");
+    printf("Enter the expression: \n");
     scanf("%s", ip);
-    strcpy(reduce, "Reduce to E");
-    strcpy(shift, "Shift");
+    printf("STACK\t\tINPUT\t\tACTION\n");
     n = strlen(ip);
     for (i = 0, j = 0; j < n; i++, j++)
     {
@@ -66,9 +66,9 @@ int main()
         {
             stack[i] = ip[j];
             stack[i + 1] = ip[j + 1];
-            ip[j] = ip[j + 1] = ' ';
             stack[i + 2] = '\0';
-            printf("$%s\t\t%s\t\t%s\n", stack, ip, shift);
+            ip[j] = ip[j + 1] = ' ';
+            printf("%s\t\t%s\t\t%s\n", stack, ip, shift);
             check();
         }
         else
@@ -76,7 +76,7 @@ int main()
             stack[i] = ip[j];
             stack[i + 1] = '\0';
             ip[j] = ' ';
-            printf("$%s\t\t%s\t\t%s\n", stack, ip, shift);
+            printf("%s\t\t%s\t\t%s\n", stack, ip, shift);
             check();
         }
     }
