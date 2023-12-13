@@ -1,18 +1,52 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <ctype.h>
-#define max 30
+#include <string.h>
 
-char a[max][max], f[max];
+char a[20][20], f[20];
 int n, m = 0;
+void first(char c), follow(char c);
+
+int main()
+{
+    printf("Enter the number of productions: ");
+    scanf("%d", &n);
+    printf("Enter the productions: \n");
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%s", a[i]);
+    }
+    for (int i = 0; i < n; i++)
+    {
+        first(a[i][0]);
+        printf("First of %c: ", a[i][0]);
+        for (int j = 0; j < m; j++)
+        {
+            printf("%c ", f[j]);
+        }
+        printf("\n");
+        m = 0;
+        strcpy(f, "");
+    }
+    for (int i = 0; i < n; i++)
+    {
+        follow(a[i][0]);
+        printf("Follow of %c: ", a[i][0]);
+        for (int j = 0; j < m; j++)
+        {
+            printf("%c ", f[j]);
+        }
+        printf("\n");
+        m = 0;
+        strcpy(f, "");
+    }
+}
 
 void first(char c)
 {
     if (islower(c))
     {
         f[m++] = c;
-        return;
     }
     else
     {
@@ -28,48 +62,18 @@ void first(char c)
 void follow(char c)
 {
     if (a[0][0] == c)
-    {
         f[m++] = '$';
-    }
     for (int i = 0; i < n; i++)
     {
         for (int j = 2; j < strlen(a[i]); j++)
         {
-            if (a[i][j + 1] != '\0')
+            if (a[i][j] == c)
             {
-                first(a[i][j + 1]);
-            }
-            else if (a[i][j + 1] == '\0' && a[i][0] != c)
-            {
-                follow(a[i][0]);
+                if (a[i][j + 1] != '\0')
+                    first(a[i][j + 1]);
+                if (a[i][j + 1] == '\0' && c != a[i][0])
+                    follow(a[i][0]);
             }
         }
-    }
-}
-int main()
-{
-    char ch[2];
-    printf("Enter the number of productions:");
-    scanf("%d", &n);
-    printf("Enter the grammar: ");
-    for (int i = 0; i < n; i++)
-    {
-        scanf("%s", a[i]);
-    }
-    printf("Enter the symbol whose first and follow to be found:");
-    scanf(" %s",ch);
-    first(ch[0]);
-    printf("First: ");
-    for (int i = 0; i < m; i++)
-    {
-        printf("%c ", f[i]);
-    }
-    strcpy(f, "");
-    m = 0;
-    follow(ch[0]);
-    printf("Follow: ");
-    for (int i = 0; i < m; i++)
-    {
-        printf("%c ", f[i]);
     }
 }
